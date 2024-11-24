@@ -1,118 +1,182 @@
-/* style.css */
-
-/* Styl dla całego popupu */
+/* Ogólne ustawienia */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
     color: #333;
 }
 
-/* Styl nagłówka */
-h1 {
-    font-size: 24px; /* Zwiększony rozmiar czcionki dla nagłówka */
-    margin-bottom: 15px;
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
 }
 
-/* Styl dla inputów i przycisków */
-input[type="text"], select, button {
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Sekcje */
+main {
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+/* Formularze */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"], select {
     padding: 10px;
-    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 22px); /* Aby zmieścić padding */
+    font-size: 14px;
 }
 
-/* Styl dla przycisków */
 button {
-    background-color: #4CAF50; /* Zielony kolor */
+    background-color: #4CAF50;
     color: white;
     border: none;
-    cursor: pointer;
-    width: 100%; /* Przyciski zajmują całą szerokość */
-}
-
-/* Styl dla przycisków na hover */
-button:hover {
-    background-color: #45a049; /* Ciemniejszy zielony */
-}
-
-/* Styl dla wyników sprawdzania linków */
-#checkResult {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 10px 15px;
     border-radius: 4px;
-    background-color: #fff; /* Ustaw kolor tła dla wyników */
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
-/* Styl dla kontenera z linkami */
-#linkContainer {
-    margin-top: 20px; /* Dodany odstęp dla kontenera z linkami */
+button:hover {
+    background-color: #45a049;
 }
 
-/* Styl dla elementów linków */
-#linkContainer div {
-    padding: 8px;
-    border-bottom: 1px solid #ddd; /* Dodana linia podziału dla linków */
+button.red {
+    background-color: #f44336;
 }
 
-/* Podświetlenie linków */
-.highlight-good {
-    background-color: lightgreen;
-    transition: background-color 0.3s;
+button.red:hover {
+    background-color: #d32f2f;
 }
 
-.highlight-suspicious {
-    background-color: lightcoral;
-    transition: background-color 0.3s;
+button.gray {
+    background-color: #757575;
 }
 
-/* Styl dla modalu edycji linku */
+button.gray:hover {
+    background-color: #616161;
+}
+
+/* Wiadomości */
+.message {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+
+.message.success {
+    color: green;
+    background-color: #e6ffe6;
+}
+
+.message.error {
+    color: red;
+    background-color: #ffe6e6;
+}
+
+/* Modal */
 #editModal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Wyśrodkowanie w pionie i poziomie */
     background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
     display: none; /* Ukryte domyślnie */
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* Zapewnia, że modal jest nad innymi elementami */
 }
 
 /* Styl dla kontenera w modalu */
 #editModal > div {
     background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 300px;
-    max-width: 100%;
+    max-width: 90%; /* Zapewnia responsywność */
+    margin: auto; /* Środek w poziomie */
 }
 
-/* Styl dla przycisków w modalu */
-#editModal button {
-    width: 48%;
-    margin: 10px 1% 0 1%;
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Lista linków */
+.links div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.links div:last-child {
+    border-bottom: none;
+}
+
+.links span {
+    flex: 1;
+}
+
+.links .edit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-/* Styl dla przycisku 'Anuluj' w modalu */
-#cancelEdit {
-    background-color: #f44336; /* Czerwony kolor */
+.links .edit-button:hover {
+    background-color: #45a049;
 }
 
-/* Styl dla przycisku 'Zapisz' w modalu */
-#saveEdit {
-    background-color: #4CAF50; /* Zielony kolor */
+/* Stopka */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+    color: #666;
+    background-color: #f4f4f4;
 }
-
-/* Przyciski w modalu na hover */
-#editModal button:hover {
-    opacity: 0.8;
-}
-
