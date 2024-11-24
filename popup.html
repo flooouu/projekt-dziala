@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Link Checker</h1>
+    
+    <!-- Sekcja dodawania linku -->
+    <input type="text" id="url" placeholder="Dodaj URL">
+    <select id="status">
+        <option value="dobry">Dobry</option>
+        <option value="podejrzany">Podejrzany</option>
+    </select>
+    <button id="addLink">Dodaj Link</button>
+
+    <!-- Sekcja sprawdzania statusu linku -->
+    <h2>Sprawdź Link</h2>
+    <input type="text" id="checkUrl" placeholder="URL do sprawdzenia">
+    <label>
+        <input type="checkbox" id="useModel"> Sprawdź za pomocą modelu
+    </label>
+    <button id="checkLink">Sprawdź</button>
+    <div id="checkResult" style="display:none;"></div> <!-- Ukryj domyślnie -->
+
+    <!-- Sekcja listy linków -->
+    <h2>Linki w bazie</h2>
+    <select id="sortOptions">
+        <option value="default">Sortuj według</option>
+        <option value="status">Status</option>
+        <option value="date">Data dodania</option>
+    </select>
+    <div id="linkContainer"></div>
+
+    <!-- Modal do edytowania linku -->
+    <div id="editModal" style="display:none;">
+        <h3>Edytuj Link</h3>
+        <label for="editUrl">Nowy URL:</label>
+        <input type="text" id="editUrl" placeholder="Nowy URL">
+        <label for="editStatus">Nowy Status:</label>
+        <select id="editStatus">
+            <option value="dobry">Dobry</option>
+            <option value="podejrzany">Podejrzany</option>
+        </select>
+        <button id="saveEdit">Zapisz</button>
+        <button id="cancelEdit">Anuluj</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

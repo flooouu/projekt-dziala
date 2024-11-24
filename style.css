@@ -1,0 +1,118 @@
+/* style.css */
+
+/* Styl dla całego popupu */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Styl nagłówka */
+h1 {
+    font-size: 24px; /* Zwiększony rozmiar czcionki dla nagłówka */
+    margin-bottom: 15px;
+}
+
+/* Styl dla inputów i przycisków */
+input[type="text"], select, button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px); /* Aby zmieścić padding */
+}
+
+/* Styl dla przycisków */
+button {
+    background-color: #4CAF50; /* Zielony kolor */
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Przyciski zajmują całą szerokość */
+}
+
+/* Styl dla przycisków na hover */
+button:hover {
+    background-color: #45a049; /* Ciemniejszy zielony */
+}
+
+/* Styl dla wyników sprawdzania linków */
+#checkResult {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* Ustaw kolor tła dla wyników */
+}
+
+/* Styl dla kontenera z linkami */
+#linkContainer {
+    margin-top: 20px; /* Dodany odstęp dla kontenera z linkami */
+}
+
+/* Styl dla elementów linków */
+#linkContainer div {
+    padding: 8px;
+    border-bottom: 1px solid #ddd; /* Dodana linia podziału dla linków */
+}
+
+/* Podświetlenie linków */
+.highlight-good {
+    background-color: lightgreen;
+    transition: background-color 0.3s;
+}
+
+.highlight-suspicious {
+    background-color: lightcoral;
+    transition: background-color 0.3s;
+}
+
+/* Styl dla modalu edycji linku */
+#editModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
+    display: none; /* Ukryte domyślnie */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Styl dla kontenera w modalu */
+#editModal > div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    max-width: 100%;
+}
+
+/* Styl dla przycisków w modalu */
+#editModal button {
+    width: 48%;
+    margin: 10px 1% 0 1%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Styl dla przycisku 'Anuluj' w modalu */
+#cancelEdit {
+    background-color: #f44336; /* Czerwony kolor */
+}
+
+/* Styl dla przycisku 'Zapisz' w modalu */
+#saveEdit {
+    background-color: #4CAF50; /* Zielony kolor */
+}
+
+/* Przyciski w modalu na hover */
+#editModal button:hover {
+    opacity: 0.8;
+}
+
