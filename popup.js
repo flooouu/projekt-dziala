@@ -145,9 +145,14 @@ document.getElementById('checkLink').addEventListener('click', async () => {
         };
     }
 
-    // Funkcja dodająca link do bazy danych
+    // Definicja resetAddLinkForm przed addLinkToDatabase
+function resetAddLinkForm() {
+    document.getElementById('manualUrlInput').value = ''; // Czyszczenie pola URL
+    document.getElementById('manualStatusSelect').value = 'dobry'; // Resetowanie wyboru statusu
+}
+
 async function addLinkToDatabase(url, status) {
-    const resultMessage = document.getElementById('resultMessage'); // Pobieranie elementu na komunikat
+    const resultMessage = document.getElementById('resultMessage');
     try {
         console.log("Dodawanie linku:", { url, status });
         const response = await fetch('https://addlink-z7s7pe3uva-uc.a.run.app', {
@@ -158,26 +163,28 @@ async function addLinkToDatabase(url, status) {
 
         if (response.ok) {
             resultMessage.innerText = "Link został pomyślnie dodany do bazy danych!";
-            resultMessage.style.color = "green"; // Kolor sukcesu
+            resultMessage.style.color = "green";
             resultMessage.style.display = "block";
             fetchLinks(); // Odśwież listę linków
             resetAddLinkForm(); // Resetuj pola
         } else {
             const errorMessage = await response.text();
             resultMessage.innerText = `Błąd podczas dodawania linku: ${errorMessage}`;
-            resultMessage.style.color = "red"; 
+            resultMessage.style.color = "red";
             resultMessage.style.display = "block";
         }
     } catch (error) {
         console.error('Błąd przy dodawaniu linku:', error);
         resultMessage.innerText = 'Wystąpił błąd podczas dodawania linku.';
-        resultMessage.style.color = "red"; 
+        resultMessage.style.color = "red";
         resultMessage.style.display = "block";
     }
     setTimeout(() => {
         resultMessage.style.display = "none";
-    }, 5000); // Komunikat znika po 5 sekundach
+    }, 5000);
 }
+
+
 
 
     // Resetowanie formularza dodawania linków

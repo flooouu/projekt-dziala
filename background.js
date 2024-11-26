@@ -1,10 +1,10 @@
 // background.js
 chrome.browserAction.onClicked.addListener((tab) => {
     chrome.windows.create({
-        url: chrome.runtime.getURL('popup.html'), // Ścieżka do pliku popup.html
+        url: chrome.runtime.getURL('popup.html'), 
         type: 'popup',
-        width: 400, // Ustaw szerokość okna
-        height: 600 // Ustaw wysokość okna
+        width: 400, 
+        height: 600 
     });
 });
 
