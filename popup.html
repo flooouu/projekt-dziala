@@ -53,7 +53,6 @@
             </div>
             <div id="linkContainer" class="links"></div>
         </section>
-        
 
         <!-- Modal do edycji linku -->
         <div id="editModal" class="modal">
@@ -66,13 +65,20 @@
                     <option value="dobry">Dobry</option>
                     <option value="podejrzany">Podejrzany</option>
                 </select>
-                <div class="modal-actions">
-                    <button id="saveEdit" class="btn green">Zapisz</button>
-                    <button id="deleteLink" class="btn red">Usuń</button>
-                    <button id="cancelEdit" class="btn gray">Anuluj</button>
-                </div>
+                <!-- Potwierdzenie usunięcia linku -->
+            <div id="deleteConfirmation" class="confirmation" style="display:none;">
+            <p>Czy na pewno chcesz usunąć ten link?</p>
+            <button id="confirmDelete" class="btn red">Tak, usuń</button>
+            <button id="cancelDelete" class="btn gray">Anuluj</button>
             </div>
-        </div>
+
+            <div class="modal-actions">
+            <button id="saveEdit" class="btn green">Zapisz</button>
+            <button id="deleteLink" class="btn red">Usuń</button>
+            <button id="cancelEdit" class="btn gray">Anuluj</button>
+            </div>
+       </div>
+   </div>
     </main>
 
     <footer>

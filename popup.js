@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .map(url => links.find(link => link.url === url));
         return uniqueLinks;
     }
-
+    
     // Funkcja do pobierania linków z bazy danych
     async function fetchLinks(sortBy = 'default') {
         try {
@@ -128,31 +128,45 @@ document.getElementById('checkLink').addEventListener('click', async () => {
 
 
     // Wyświetlanie modala do edytowania linku
-    function showEditModal(id, url, status) {
-        const editModal = document.getElementById('editModal');
-        document.getElementById('editUrl').value = url;
-        document.getElementById('editStatus').value = status;
-        editModal.style.display = 'block';
+function showEditModal(id, url, status) {
+    const editModal = document.getElementById('editModal');
+    document.getElementById('editUrl').value = url;
+    document.getElementById('editStatus').value = status;
+    editModal.style.display = 'block';
 
-        document.getElementById('saveEdit').onclick = () => saveEditedLink(id);
-        document.getElementById('deleteLink').onclick = () => {
-            if (confirm("Czy na pewno chcesz usunąć ten link?")) {
-                deleteLinkFromDatabase(id);
-            }
-        };
-        document.getElementById('cancelEdit').onclick = () => {
-            editModal.style.display = 'none';
-        };
-    }
+    // Resetowanie stanu przycisku "Usuń" i ukrywanie okna potwierdzenia
+    document.getElementById('deleteConfirmation').style.display = 'none';
+    document.getElementById('deleteLink').style.display = 'block';
 
-    // Definicja resetAddLinkForm przed addLinkToDatabase
-function resetAddLinkForm() {
-    document.getElementById('manualUrlInput').value = ''; // Czyszczenie pola URL
-    document.getElementById('manualStatusSelect').value = 'dobry'; // Resetowanie wyboru statusu
+    // Przyciski edycji
+    document.getElementById('saveEdit').onclick = () => saveEditedLink(id);
+    document.getElementById('cancelEdit').onclick = () => {
+        editModal.style.display = 'none';
+    };
+
+    // Przycisk usuwania
+    document.getElementById('deleteLink').onclick = () => {
+        // Ukryj przycisk 'Usuń' i pokaż potwierdzenie
+        document.getElementById('deleteLink').style.display = 'none';
+        document.getElementById('deleteConfirmation').style.display = 'block';
+    };
+
+    // Potwierdzenie usunięcia
+    document.getElementById('confirmDelete').onclick = () => {
+        deleteLinkFromDatabase(id);  // Usuwanie linku
+        editModal.style.display = 'none';  // Zamknięcie okna edycji po usunięciu
+    };
+
+    document.getElementById('cancelDelete').onclick = () => {
+        // Anulowanie usunięcia
+        document.getElementById('deleteConfirmation').style.display = 'none';
+        document.getElementById('deleteLink').style.display = 'block';
+    };
 }
 
+    // Funkcja dodająca link do bazy danych
 async function addLinkToDatabase(url, status) {
-    const resultMessage = document.getElementById('resultMessage');
+    const resultMessage = document.getElementById('resultMessage'); // Pobieranie elementu na komunikat
     try {
         console.log("Dodawanie linku:", { url, status });
         const response = await fetch('https://addlink-z7s7pe3uva-uc.a.run.app', {
@@ -163,28 +177,26 @@ async function addLinkToDatabase(url, status) {
 
         if (response.ok) {
             resultMessage.innerText = "Link został pomyślnie dodany do bazy danych!";
-            resultMessage.style.color = "green";
+            resultMessage.style.color = "green"; // Kolor sukcesu
             resultMessage.style.display = "block";
             fetchLinks(); // Odśwież listę linków
             resetAddLinkForm(); // Resetuj pola
         } else {
             const errorMessage = await response.text();
             resultMessage.innerText = `Błąd podczas dodawania linku: ${errorMessage}`;
-            resultMessage.style.color = "red";
+            resultMessage.style.color = "red"; 
             resultMessage.style.display = "block";
         }
     } catch (error) {
         console.error('Błąd przy dodawaniu linku:', error);
         resultMessage.innerText = 'Wystąpił błąd podczas dodawania linku.';
-        resultMessage.style.color = "red";
+        resultMessage.style.color = "red"; 
         resultMessage.style.display = "block";
     }
     setTimeout(() => {
         resultMessage.style.display = "none";
-    }, 5000);
+    }, 5000); // Komunikat znika po 5 sekundach
 }
-
-
 
 
     // Resetowanie formularza dodawania linków
@@ -247,56 +259,41 @@ async function addLinkToDatabase(url, status) {
         resultMessage.style.display = "none";
     }, 5000);
 }
-// Funkcja do usuwania linku
+// Funkcja do usuwania linku z bazy danych
 async function deleteLinkFromDatabase(id) {
-    const resultMessage = document.getElementById('resultMessage'); // Element do wyświetlania komunikatów
-    const confirmMessage = document.getElementById('confirmMessage'); // Element do potwierdzania usunięcia
+    const resultMessage = document.getElementById('resultMessage');
+    try {
+        const response = await fetch('https://deletelink-z7s7pe3uva-uc.a.run.app', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        });
 
-    // Wyświetlanie potwierdzenia usunięcia
-    confirmMessage.style.display = 'block';
-    confirmMessage.innerHTML = `
-        <p>Czy na pewno chcesz usunąć ten link?</p>
-        <button id="confirmDelete" style="margin-right: 10px;">Tak</button>
-        <button id="cancelDelete">Nie</button>
-    `;
-
-    document.getElementById('confirmDelete').onclick = async () => {
-        try {
-            const response = await fetch('https://deletelink-z7s7pe3uva-uc.a.run.app', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id }),
-            });
-
-            if (response.ok) {
-                resultMessage.innerText = "Link został usunięty z bazy danych!";
-                resultMessage.style.color = "green"; // Kolor sukcesu
-                resultMessage.style.display = "block";
-                fetchLinks(); // Odśwież listę linków
-            } else {
-                const errorMessage = await response.text();
-                resultMessage.innerText = `Błąd podczas usuwania linku: ${errorMessage}`;
-                resultMessage.style.color = "red"; // Kolor błędu
-                resultMessage.style.display = "block";
-            }
-        } catch (error) {
-            console.error('Błąd przy usuwaniu linku:', error);
-            resultMessage.innerText = 'Wystąpił błąd podczas usuwania linku.';
-            resultMessage.style.color = "red"; // Kolor błędu
+        if (response.ok) {
+            resultMessage.innerText = "Link został usunięty z bazy danych!";
+            resultMessage.style.color = "green";
+            resultMessage.style.display = "block";
+            fetchLinks(); // Odśwież listę linków
+        } else {
+            const errorMessage = await response.text();
+            resultMessage.innerText = `Błąd podczas usuwania linku: ${errorMessage}`;
+            resultMessage.style.color = "red";
             resultMessage.style.display = "block";
         }
+    } catch (error) {
+        console.error('Błąd przy usuwaniu linku:', error);
+        resultMessage.innerText = 'Wystąpił błąd podczas usuwania linku.';
+        resultMessage.style.color = "red";
+        resultMessage.style.display = "block";
+    }
 
-        confirmMessage.style.display = 'none'; // Ukryj komunikat potwierdzenia
-    };
-
-    document.getElementById('cancelDelete').onclick = () => {
-        confirmMessage.style.display = 'none'; // Ukryj komunikat potwierdzenia
-    };
-    // Ukryj komunikat po 5 sekundach
     setTimeout(() => {
         resultMessage.style.display = "none";
     }, 5000);
 }
+
 // Funkcja do sortowania linków
 document.getElementById('sortOptions').addEventListener('change', async () => {
     const sortBy = document.getElementById('sortOptions').value;
